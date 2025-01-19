@@ -1,0 +1,79 @@
+//the Hotel class
+class Hotel {
+  static totalHotels = 0;
+
+  constructor(hotelId, name) {
+    this.hotelId = hotelId;
+    this.name = name;
+    Hotel.totalHotels++;
+    this.rooms = [];
+  }
+
+  addRoom(room) {
+    this.rooms.push(room);
+    console.log(`Room ${room.roomNumber} added to ${this.name}.`);
+  }
+
+  removeRoom(room) {
+    this.rooms = this.rooms.filter(r => r.roomNumber !== room.roomNumber);
+    console.log(`Room ${room.roomNumber} removed from ${this.name}.`);
+  }
+}
+
+//the Guest class
+class Guest {
+  static totalGuests = 0;
+
+  constructor(guestId, name) {
+    this.guestId = guestId;
+    this.name = name;
+    Guest.totalGuests++;
+  }
+
+  checkIn(room) {
+    console.log(`${this.name} checked into room ${room.roomNumber}.`);
+    room.book();
+  }
+
+  checkOut(room) {
+    console.log(`${this.name} checked out of room ${room.roomNumber}.`);
+    room.release();
+  }
+}
+
+// Room class
+class Room {
+  constructor(roomNumber, type) {
+    this.roomNumber = roomNumber;
+    this.type = type;
+    this.isBooked = false;
+  }
+
+  book() {
+    if (!this.isBooked) {
+      this.isBooked = true;
+      console.log(`Room ${this.roomNumber} is now booked.`);
+    } else {
+      console.log(`Room ${this.roomNumber} is already booked.`);
+    }
+  }
+
+  release() {
+    if (this.isBooked) {
+      this.isBooked = false;
+      console.log(`Room ${this.roomNumber} is now available.`);
+    } else {
+      console.log(`Room ${this.roomNumber} is already available.`);
+    }
+  }
+}
+const hotel1 = new Hotel("H001", "Grand Hotel");
+const room101 = new Room("101", "Deluxe");
+const guest1 = new Guest("G001", "Amaka Emenike");
+
+// Adding a room to the hotel
+hotel1.addRoom(room101);
+
+// checking in and out of guest
+guest1.checkIn(room101);
+guest1.checkOut(room101);
